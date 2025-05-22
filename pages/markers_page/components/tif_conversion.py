@@ -1,3 +1,6 @@
+import time
+from selenium.common import StaleElementReferenceException
+
 from base.base_page import BasePage
 from selenium.webdriver.remote.webelement import WebElement
 
@@ -90,13 +93,17 @@ class TifConversion(BasePage):
                 break
 
     def check_select_fok_to_gtc_checkbox_by_username(self, username):
-        for index, row in enumerate(self._rows, start=1):
-            if username in self.get_row_content(index):
-                cell = row.find_element(*self._EDIT_FOK_TO_GTC_CHECKBOX)
-                assert cell.is_selected(), f"Checkbox for '{username}' is not selected"
-                break
-        else:
-            raise AssertionError(f"Row with username '{username}' not found")
+        for _ in range(3):
+            try:
+                for index, row in enumerate(self._rows, start=1):
+                    if username in self.get_row_content(index):
+                        cell = row.find_element(*self._EDIT_FOK_TO_GTC_CHECKBOX)
+                        assert cell.is_selected(), f"Checkbox for '{username}' is not selected"
+                        break
+                else:
+                    raise AssertionError(f"Row with username '{username}' not found")
+            except StaleElementReferenceException:
+                time.sleep(1)
 
     def check_select_ioc_to_gtc_checkbox_by_username(self, username):
         for index, row in enumerate(self._rows, start=1):
@@ -111,7 +118,12 @@ class TifConversion(BasePage):
 
     def click_save_rules(self):
         self.ui_helper.click(self._SAVE_RULES_LOCATOR)
+
+    def click_ok(self):
         self.ui_helper.click(self._BUTTON_OK_LOCATOR)
+
+
+
 
     def click_cancel(self):
         self.ui_helper.click(self._CANCEL_RULES_LOCATOR)
@@ -119,7 +131,7 @@ class TifConversion(BasePage):
 
     def select_all(self):
         self.ui_helper.click(self._BATCH_DROPDOWN_SELECT_LOCATOR)
-        self.ui_helper.click(self._BATCH_ALL_SELECT_LOCATOR)
+        self.ui_helper.click(self._SELECT_ALL_LOCATOR)
 
     def select_all_fok_to_gtc(self):
         self.ui_helper.click(self._BATCH_DROPDOWN_SELECT_LOCATOR)

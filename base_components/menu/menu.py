@@ -2,6 +2,7 @@ from base.base_page import BasePage
 from base_components.menu.components.settings import Settings
 from base_components.menu.components.databases import Databases
 from base_components.menu.components.risk_management import RiskManagement
+from base_components.menu.components.home import Home
 
 
 
@@ -22,6 +23,7 @@ class Menu(BasePage):
         self.settings = Settings(self.driver)
         self.databases = Databases(self.driver)
         self.risk_management = RiskManagement(self.driver)
+        self.home = Home(self.driver)
 
 
 

@@ -7,6 +7,7 @@ from pages.markers_page.components.edit import Edit
 from pages.markers_page.components.delete import Delete
 from pages.markers_page.components.positions.positions import Positions
 from pages.markers_page.components.tif_conversion import TifConversion
+from pages.markers_page.components.symbols.symbols import Symbols
 
 
 class MarkersPage(BasePage):
@@ -17,8 +18,8 @@ class MarkersPage(BasePage):
     _CELLS_LOCATOR = ".//td"
     _DELETE_BUTTON = ".//td[@name='DeleteButton']"
     _EDIT_BUTTON = ".//td[@name='EditButton']"
-
     _CREATE_BUTTON_LOCATOR = "//button[@id='Create']"
+
     _ACTION_LOCATOR = ".//div[@aria-label='Actions']"
     _REJECTION_STARS_LOCATOR = "//li[@aria-label='Rejection stats']"
     _POSITION_LOCATOR = "//li[@aria-label='Positions']"
@@ -37,6 +38,7 @@ class MarkersPage(BasePage):
         self.delete = Delete(driver)
         self.positions = Positions(driver)
         self.tif_conversion = TifConversion(driver)
+        self.symbols = Symbols(driver)
 
 
 
