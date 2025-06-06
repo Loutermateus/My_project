@@ -24,13 +24,17 @@ class Create(BasePage):
         self.ui_helper.fill(self._TAKER_SYMBOLS_FIELD_LOCATOR, text, clear=True)
 
     def click_create_rule(self):
-        self.ui_helper.click(self._BUTTON_CREATE_LOCATOR)
-
+        for _ in range(1):
+            try:
+                self.ui_helper.click(self._BUTTON_CREATE_LOCATOR)
+            except StaleElementReferenceException:
+                time.sleep(1)
 
     def fill_hub_symbol(self, hub_symbol):
-        for _ in range(3):
+        for _ in range(1):
             try:
                 self.ui_helper.click(self._CLICK_HUB_SYMBOL_DROPDOWN_LOCATOR)
+                self.ui_helper.screenshot()
                 elements = self.ui_helper.find_all(self._HUB_SYMBOLS_LOCATORS, wait=True)
                 for element in elements:
                     if hub_symbol in element.text:
