@@ -1,0 +1,17 @@
+
+
+services:
+
+  smoke-api-test:
+    image: tp:v1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    shm_size: 2gb
+    volumes:
+      - ./:/usr/workspace
+      - /dev/shm:/dev/shm  # Расширяет память для Chrome в Docker
+    working_dir: /usr/workspace
+    command: >
+      /bin/sh -c "pytest -sv -o log_cli=true --alluredir=report -n=2"
+    tty: true

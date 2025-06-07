@@ -2,8 +2,9 @@ import time
 
 from base.base_test import BaseTest
 import pytest
+import allure
 
-
+@allure.epic("Test tp")
 class TestExe(BaseTest):
 
 
@@ -105,35 +106,36 @@ class TestExe(BaseTest):
     #_____________________________________________________________________
 
 
-    # @pytest.mark.parametrize("add_users", [1], indirect=True)
-    # def test_create_manager(self, add_users):
-    #     manager = add_users[0]
-    #     self.login_page().open()
-    #     self.login_page().login_as("admin")
-    #     self.menu().open_users()
-    #     self.users_page().open_create()
-    #     self.users_page().create.fill_market_type("Manager")
-    #     self.users_page().create.fill_login()
-    #     self.users_page().create.fill_password()
-    #     self.users_page().create.click_create()
-    #     self.users_page().refresh_page()
-    #     self.users_page().find_row_by_username("LOGIN")
-    #
-    #     #for manager
-    #     self.login_page(manager).open()
-    #     self.login_page(manager).login_as("manager")
-    #     self.menu(manager).settings.open_setting_market()
-    #     self.menu(manager).open_market_watch()
-    #     self.menu(manager).click_logout()
-    #
-    #
-    #     #for admin
-    #     self.users_page().click_delete_row_by_username("LOGIN")
-    #     self.users_page().delete.click_delete()
-    #     self.users_page().refresh_page()
-    #     self.users_page().cant_find_row_by_username("LOGIN")
+    @pytest.mark.parametrize("add_users", [1], indirect=True)
+    @allure.title("Test Param")
+    def test_create_manager(self, add_users):
+        manager = add_users[0]
+        self.login_page().open()
+        self.login_page().login_as("admin")
+        self.menu().open_users()
+        self.users_page().open_create()
+        self.users_page().create.fill_market_type("Manager")
+        self.users_page().create.fill_login()
+        self.users_page().create.fill_password()
+        self.users_page().create.click_create()
+        self.users_page().refresh_page()
+        self.users_page().find_row_by_username("LOGIN")
+
+        #for manager
+        self.login_page(manager).open()
+        self.login_page(manager).login_as("manager")
+        self.menu(manager).settings.open_setting_market()
+        self.menu(manager).open_market_watch()
+        self.menu(manager).click_logout()
 
 
+        #for admin
+        self.users_page().click_delete_row_by_username("LOGIN")
+        self.users_page().delete.click_delete()
+        self.users_page().refresh_page()
+        self.users_page().cant_find_row_by_username("LOGIN")
+
+    @allure.title("Test for user")
     def test_adjust_position_for_taker(self):
         self.login_page().open()
         self.login_page().login()
@@ -158,10 +160,11 @@ class TestExe(BaseTest):
         self.price_channel_page().find_row_by_username("naso")
         self.price_channel_page().click_rules_row_by_username("naso")
         self.price_channel_page().rules.open_create()
+
         self.price_channel_page().rules.create.fill_hub_symbol("EUR/USD$")
-        self.price_channel_page().rules.create.fill_taker_symbols("USD")
+        self.price_channel_page().rules.create.fill_taker_symbols("Dollar")
         self.price_channel_page().rules.create.click_create_rule()
-        self.price_channel_page().rules.find_row_by_username("USD")
+        self.price_channel_page().rules.find_row_by_username("Dollar")
         self.price_channel_page().rules.save_rules()
         self.price_channel_page().rules.click_close()
         self.price_channel_page().refresh_page()

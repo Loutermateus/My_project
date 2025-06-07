@@ -1,29 +1,43 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 
-
+CHROMEDRIVER_PATH = "/usr/bin/chromedriver"
 
 @pytest.fixture(autouse=True)
 def driver(request):
     options = webdriver.ChromeOptions()
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--headless=new")   # Убери, если нужно окно браузера
+
+    service = Service(CHROMEDRIVER_PATH)
+    driver = webdriver.Chrome(options=options, service=service)
+
     driver.get("https://qa-windows-1.takeprofittech.com:8000")
     request.cls.driver = driver
     yield driver
     driver.quit()
 
 
-
 @pytest.fixture()
-def add_users(request): # Фикстура для добавления юзеров в тест
-    user_count = request.param # Принимаем кол-во юзеров из параметров теста
-    drivers = [] # Создаем пустой список драйверов, туда будем класть новых юзеров
+def add_users(request):
+    user_count = request.param
+    drivers = []
+
     for _ in range(user_count):
         options = webdriver.ChromeOptions()
         options.add_argument("--window-size=1920,1080")
-        driver = webdriver.Chrome(options=options)
-        drivers.append(driver) # Тут через цикл мы добавляем новые браузеры в список
-    yield drivers # Переходим к тесту
-    for driver in drivers: # После теста закрываем все драйверы, которые были созданы
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--headless")
+
+        service = Service(CHROMEDRIVER_PATH)
+        driver = webdriver.Chrome(service=service, options=options)
+        drivers.append(driver)
+
+    yield drivers
+
+    for driver in drivers:
         driver.quit()
