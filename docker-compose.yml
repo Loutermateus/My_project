@@ -1,3 +1,5 @@
+
+
 services:
 
   smoke-api-test:
@@ -8,10 +10,8 @@ services:
     shm_size: 2gb
     volumes:
       - ./:/usr/workspace
-      - ./report:/usr/workspace/report
-      - ./allure-report:/usr/workspace/allure-report  # <--- вот это
-      - /dev/shm:/dev/shm
+      - /dev/shm:/dev/shm  # Расширяет память для Chrome в Docker
     working_dir: /usr/workspace
     command: >
-      /bin/sh -c "mkdir -p report && pytest -sv -o log_cli=true --alluredir=report -n=2 && allure generate report -o allure-report --clean"
+      /bin/sh -c "pytest -sv -o log_cli=true --alluredir=report -n=2"
     tty: true
