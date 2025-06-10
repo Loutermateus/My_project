@@ -80,7 +80,6 @@ class Rules(BasePage):
 
     def save_rules(self):
         self.ui_helper.click(self._SAVE_RULES_BUTTON_LOCATOR)
-        self.ui_helper.find(self._BUTTON_SAVE_OK_LOCATOR, wait=True)
         self.ui_helper.click(self._BUTTON_SAVE_OK_LOCATOR)
 
     def click_cancel(self):
@@ -95,3 +94,4 @@ class Rules(BasePage):
 
     def click_close(self):
         self.ui_helper.click(self._BUTTON_CLOSE_LOCATOR)
+

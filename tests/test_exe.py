@@ -27,10 +27,13 @@ class TestExe(BaseTest):
         self.markers_pages().find_row_by_username("berlin")
         self.markers_pages().click_edit_row_by_username("berlin")
         self.markers_pages().edit.fill_market_type("OneZero")
-        self.markers_pages().edit.fill_name("pagoda")
+        self.markers_pages().edit.fill_name("mike")
         self.markers_pages().edit.click_save()
         self.markers_pages().refresh_page()
-        self.markers_pages().find_row_by_username("pagoda")
+        self.markers_pages().click_delete_row_by_username("mike")
+        self.markers_pages().delete.click_delete()
+        self.markers_pages().refresh_page()
+
 
 
 
@@ -39,6 +42,15 @@ class TestExe(BaseTest):
         self.login_page().open()
         self.login_page().login()
         self.menu().settings.open_setting_market()
+        self.markers_pages().open_create()
+        self.markers_pages().create.choose_enable()
+        self.markers_pages().create.fill_name("pagoda")
+        self.markers_pages().create.fill_configuration("babu")
+        self.markers_pages().create.fill_market_type("Fortex")
+        self.markers_pages().create.choose_save_to_csv_file()
+        self.markers_pages().create.choose_save_to_log_file()
+        self.markers_pages().create.click_create()
+        self.markers_pages().refresh_page()
         self.markers_pages().open_action_position_by_name("pagoda")
         self.markers_pages().positions.open_adjust()
         self.markers_pages().positions.adjust.fill_symbol("EUR/USD$")
@@ -63,6 +75,7 @@ class TestExe(BaseTest):
         self.markers_pages().refresh_page()
         self.markers_pages().click_delete_row_by_username("pagoda")
         self.markers_pages().delete.click_delete()
+        self.markers_pages().refresh_page()
 
 
     @allure.title("Test TIF conversion")
@@ -95,6 +108,7 @@ class TestExe(BaseTest):
         self.markers_pages().refresh_page()
         self.markers_pages().click_delete_row_by_username("karavan")
         self.markers_pages().delete.click_delete()
+        self.markers_pages().refresh_page()
 
 
 
@@ -157,7 +171,9 @@ class TestExe(BaseTest):
         self.price_channel_page().click_rules_row_by_username("naso")
         self.price_channel_page().rules.open_create()
         self.price_channel_page().rules.create.fill_hub_symbol("EUR/USD$")
+        self.price_channel_page().rules.create.fill_taker_symbols("USD")
         self.price_channel_page().rules.create.click_create_rule()
+        self.price_channel_page().rules.find_row_by_username("USD")
         self.price_channel_page().rules.save_rules()
         self.price_channel_page().rules.click_close()
         self.price_channel_page().refresh_page()
