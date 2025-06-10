@@ -56,7 +56,11 @@ jobs:
             -e MANAGER_PASSWORD="$MANAGER_PASSWORD" \
             smoke-api-test /bin/sh -c "\
               mkdir -p report && \
-              pytest -sv -o log_cli=true -m $MARKER --alluredir=report -n=$THREADS && \
+              if [ \"$MARKER\" = \"all\" ]; then \
+                pytest -sv -o log_cli=true --alluredir=report -n=$THREADS; \
+              else \
+                pytest -sv -o log_cli=true -m \"$MARKER\" --alluredir=report -n=$THREADS; \
+              fi && \
               allure generate report -o allure-report --clean"
 
       - name: Copy Allure history
