@@ -9,6 +9,8 @@ from pages.markers_page.components.positions.positions import Positions
 from pages.markers_page.components.tif_conversion import TifConversion
 from pages.markers_page.components.symbols.symbols import Symbols
 
+import allure
+
 
 class MarkersPage(BasePage):
 
@@ -117,7 +119,7 @@ class MarkersPage(BasePage):
                 self.ui_helper.click(self._REJECTION_STARS_LOCATOR)
                 break
 
-
+    @allure.step("Step")
     def open_action_position_by_name(self, name):
         for row in self._rows:
             if name in self.get_row_content(self._rows.index(row) + 1):

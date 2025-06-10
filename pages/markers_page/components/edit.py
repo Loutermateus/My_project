@@ -13,6 +13,7 @@ class Edit(BasePage):
     _CHECKBOX_ENABLE_LOCATOR = "//label[@for='IsEnabled']//span[@class='e-icons e-frame']"
     _SAVE_BUTTON_LOCATOR = "//div[@id='providerEditDialog']//button[text()='Save']"
     _CLOSE_BUTTON_LOCATOR = "//div[@id='createDialog-Provider_dialog-header']//button[@type='button']"
+    _CONFIRM_BUTTON_LOCATOR = "//button[text()='Confirm']"
 
     _MARKER_TYPE_LOCATORS = "//li[@role='option']"
     _CLICK_DROPDOWN_LOCATOR = "//span[@class='e-input-group-icon e-ddl-icon e-search-icon']"
@@ -58,6 +59,10 @@ class Edit(BasePage):
 
     def fill_default_configuration(self):
         self.ui_helper.click(self._FILL_DEFAULT_CONFIGURATION_LOCATOR)
+        self.ui_helper.screenshot()
+
+    def click_confirm(self):
+        self.ui_helper.click(self._CONFIRM_BUTTON_LOCATOR, "Confirm button")
 
     def click_yes(self):
         self.ui_helper.click(self._BUTTON_YES_LOCATOR, "Button yes")
