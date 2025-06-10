@@ -7,12 +7,12 @@ on:
       MARKER:
         description: "Pytest marker"
         required: true
-        default: "ui"
+        default: "all"
         type: choice
         options:
-          - ui
-          - regression
           - smoke
+          - users
+          - all
       THREADS:
         description: "Number of threads"
         required: true
