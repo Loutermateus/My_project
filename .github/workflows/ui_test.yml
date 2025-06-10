@@ -37,27 +37,27 @@ jobs:
           ref: gh-pages
           path: ./.github/gh-pages
 
-      - name: Set up Docker Compose override
+      - name: Export inputs as env vars
         run: |
-          echo "Создаём docker-compose.override.yml с маркером и потоками и секретами"
-          cat <<EOF > docker-compose.override.yml
-version: '3.8'
-
-services:
-  smoke-api-test:
-    environment:
-      - LOGIN=${{ secrets.LOGIN }}
-      - PASSWORD=${{ secrets.PASSWORD }}
-      - MANAGER_LOGIN=${{ secrets.MANAGER_LOGIN }}
-      - MANAGER_PASSWORD=${{ secrets.MANAGER_PASSWORD }}
-    command: >
-      /bin/sh -c "mkdir -p report &&
-                  pytest -sv -o log_cli=true -m ${{ github.event.inputs.MARKER }} --alluredir=report -n=${{ github.event.inputs.THREADS }} &&
-                  allure generate report -o allure-report --clean"
-EOF
+          echo "MARKER=${{ github.event.inputs.MARKER }}" >> $GITHUB_ENV
+          echo "THREADS=${{ github.event.inputs.THREADS }}" >> $GITHUB_ENV
 
       - name: Run UI tests via Docker
-        run: docker compose up --build --abort-on-container-exit
+        env:
+          LOGIN: ${{ secrets.LOGIN }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          MANAGER_LOGIN: ${{ secrets.MANAGER_LOGIN }}
+          MANAGER_PASSWORD: ${{ secrets.MANAGER_PASSWORD }}
+        run: |
+          docker compose run --rm \
+            -e LOGIN="$LOGIN" \
+            -e PASSWORD="$PASSWORD" \
+            -e MANAGER_LOGIN="$MANAGER_LOGIN" \
+            -e MANAGER_PASSWORD="$MANAGER_PASSWORD" \
+            smoke-api-test /bin/sh -c "\
+              mkdir -p report && \
+              pytest -sv -o log_cli=true -m $MARKER --alluredir=report -n=$THREADS && \
+              allure generate report -o allure-report --clean"
 
       - name: Copy Allure history
         run: |
