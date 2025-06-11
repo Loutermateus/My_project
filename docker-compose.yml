@@ -10,7 +10,7 @@ services:
     volumes:
       - ./:/usr/workspace
       - /dev/shm:/dev/shm
-    working_dir: /usr/src/app
+    working_dir: /usr/workspace
     command: >
       /bin/sh -c "\
         pytest -sv -o log_cli=true --alluredir=allure-results -n=2 || true"
