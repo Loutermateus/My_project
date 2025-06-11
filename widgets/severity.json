@@ -1,0 +1,61 @@
+[ {
+  "uid" : "9d8abb859576a932",
+  "name" : "Test for user",
+  "time" : {
+    "start" : 1749632566155,
+    "stop" : 1749632601279,
+    "duration" : 35124
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "ff753b252eaf570a",
+  "name" : "Test adjust",
+  "time" : {
+    "start" : 1749632530251,
+    "stop" : 1749632543677,
+    "duration" : 13426
+  },
+  "status" : "broken",
+  "severity" : "normal"
+}, {
+  "uid" : "4c465caab4f4775",
+  "name" : "Test TIF conversion",
+  "time" : {
+    "start" : 1749632546067,
+    "stop" : 1749632563833,
+    "duration" : 17766
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "83db832224322a57",
+  "name" : "Test Param",
+  "time" : {
+    "start" : 1749632552417,
+    "stop" : 1749632569452,
+    "duration" : 17035
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "5cc108fde47d799",
+  "name" : "Test for change name",
+  "time" : {
+    "start" : 1749632534943,
+    "stop" : 1749632549713,
+    "duration" : 14770
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "19f06c13c4e8d3d6",
+  "name" : "Test Login",
+  "time" : {
+    "start" : 1749632530177,
+    "stop" : 1749632532359,
+    "duration" : 2182
+  },
+  "status" : "passed",
+  "severity" : "normal"
+} ]
