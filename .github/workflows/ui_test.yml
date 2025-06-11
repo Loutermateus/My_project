@@ -35,28 +35,26 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: gh-pages
-          path: ./.github/gh-pages
+          path: ./.gh-pages
 
       - name: Export inputs as env vars
         run: |
           echo "MARKER=${{ github.event.inputs.MARKER }}" >> $GITHUB_ENV
           echo "THREADS=${{ github.event.inputs.THREADS }}" >> $GITHUB_ENV
 
-      - name: Run UI tests via Docker
+      - name: Run UI tests and generate Allure report
         env:
           LOGIN: ${{ secrets.LOGIN }}
           PASSWORD: ${{ secrets.PASSWORD }}
           MANAGER_LOGIN: ${{ secrets.MANAGER_LOGIN }}
           MANAGER_PASSWORD: ${{ secrets.MANAGER_PASSWORD }}
-          MARKER: ${{ github.event.inputs.MARKER }}
-          THREADS: ${{ github.event.inputs.THREADS }}
         run: |
           docker compose run --rm \
             -e LOGIN="$LOGIN" \
             -e PASSWORD="$PASSWORD" \
             -e MANAGER_LOGIN="$MANAGER_LOGIN" \
             -e MANAGER_PASSWORD="$MANAGER_PASSWORD" \
-            smoke-api-test /bin/sh -c "\
+            ui-tests /bin/sh -c "\
               mkdir -p report && \
               if [ \"$MARKER\" = \"all\" ]; then \
                 pytest -sv -o log_cli=true --alluredir=report -n=$THREADS; \
@@ -65,17 +63,22 @@ jobs:
               fi && \
               allure generate report -o report --clean"
 
+      - name: Убедиться, что report/index.html существует
+        run: |
+          ls -la report
+          test -f report/index.html && echo "✅ index.html найден" || (echo "❌ index.html отсутствует" && exit 1)
+
       - name: Copy Allure history
         run: |
           mkdir -p report/history
-          if [ -d "./.github/gh-pages/history" ]; then
-            cp -R ./.github/gh-pages/history/* report/history/
+          if [ -d "./.gh-pages/history" ]; then
+            cp -R ./.gh-pages/history/* report/history/
           fi
 
       - name: Deploy Allure report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          token: ${{ secrets.CI_TOKEN }}
+          token: ${{ secrets.CI_TOKEN }}         # Убедись, что у CI_TOKEN есть scope workflow + repo + pages
           branch: gh-pages
-          folder: report     # <- именно папка, где есть index.html
-          clean: true        # <- удалит всё старое из gh-pages и оставит только Allure
+          folder: report
+          clean: true
