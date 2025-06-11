@@ -69,6 +69,7 @@ class MarkersPage(BasePage):
         for i, row in enumerate(self._rows, start=1):
             if username in self.get_row_content(i):
                 assert True  # нашли — тест проходит
+                self.ui_helper.screenshot()
                 return
         assert False, "Dont have this row"  # не нашли — тест падает
 

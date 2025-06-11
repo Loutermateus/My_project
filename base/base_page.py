@@ -27,7 +27,7 @@ class BasePage(metaclass=MetaLocator):
 
     def refresh_page(self):
         self.driver.refresh()
-        self.ui_helper.screenshot()
+
 
 
 
