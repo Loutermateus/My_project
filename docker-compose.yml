@@ -17,3 +17,14 @@ services:
         pytest -sv -o log_cli=true --alluredir=report -n=2 && \
         allure generate report -o report --clean"
     tty: true
+
+
+  report:
+    image: tp:v1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/workspace
+    command: /bin/sh -c "ls -la && allure generate report --clean -o allure-report"
+    working_dir: /usr/workspace
