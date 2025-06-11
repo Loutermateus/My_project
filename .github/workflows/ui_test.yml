@@ -78,7 +78,7 @@ jobs:
             cp -R ./.gh-pages/history/* report/history/
           fi
 
-      - name: Debug: show report files before deploy
+      - name: Debug – show report files before deploy
         run: |
           echo "📁 Содержимое report перед деплоем:"
           ls -la report
@@ -86,7 +86,7 @@ jobs:
           head -n 10 report/index.html
 
       - name: Deploy Allure report to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.CI_TOKEN }}
           branch: gh-pages
