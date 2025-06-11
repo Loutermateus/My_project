@@ -4,22 +4,22 @@
   "children" : [ {
     "name" : "Test defects",
     "children" : [ {
-      "name" : "selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame\n  (Session info: chrome=137.0.7151.68); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception\nStacktrace:\n#0 0x55c3541cdd9e <unknown>\n#1 0x55c353c6cfab <unknown>\n#2 0x55c353c74439 <unknown>\n#3 0x55c353c762bb <unknown>\n#4 0x55c353c76381 <unknown>\n#5 0x55c353cb2066 <unknown>\n#6 0x55c353ce14d2 <unknown>\n#7 0x55c353cacdae <unknown>\n#8 0x55c353ce16de <unknown>\n#9 0x55c353d02915 <unknown>\n#10 0x55c353ce1283 <unknown>\n#11 0x55c353cab0c9 <unknown>\n#12 0x55c353cabe78 <unknown>\n#13 0x55c354199f5a <unknown>\n#14 0x55c35419d3ae <unknown>\n#15 0x55c35419ce58 <unknown>\n#16 0x55c35419d845 <unknown>\n#17 0x55c35418338b <unknown>\n#18 0x55c35419dbb0 <unknown>\n#19 0x55c35416c339 <unknown>\n#20 0x55c3541bc8b5 <unknown>\n#21 0x55c3541bca9b <unknown>\n#22 0x55c3541ccf15 <unknown>\n#23 0x7ff198f481f5 <unknown>",
+      "name" : "selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame\n  (Session info: chrome=137.0.7151.68); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception\nStacktrace:\n#0 0x55a960bfdd9e <unknown>\n#1 0x55a96069cfab <unknown>\n#2 0x55a9606a4439 <unknown>\n#3 0x55a9606a62bb <unknown>\n#4 0x55a9606a6381 <unknown>\n#5 0x55a9606e2066 <unknown>\n#6 0x55a9607114d2 <unknown>\n#7 0x55a9606dcdae <unknown>\n#8 0x55a9607116de <unknown>\n#9 0x55a960732915 <unknown>\n#10 0x55a960711283 <unknown>\n#11 0x55a9606db0c9 <unknown>\n#12 0x55a9606dbe78 <unknown>\n#13 0x55a960bc9f5a <unknown>\n#14 0x55a960bcd3ae <unknown>\n#15 0x55a960bcce58 <unknown>\n#16 0x55a960bcd845 <unknown>\n#17 0x55a960bb338b <unknown>\n#18 0x55a960bcdbb0 <unknown>\n#19 0x55a960b9c339 <unknown>\n#20 0x55a960bec8b5 <unknown>\n#21 0x55a960beca9b <unknown>\n#22 0x55a960bfcf15 <unknown>\n#23 0x7f90d0a001f5 <unknown>",
       "children" : [ {
         "name" : "Test adjust",
-        "uid" : "ff753b252eaf570a",
-        "parentUid" : "19110049971c3006ec56c36252e410a3",
+        "uid" : "775f118fcbf08895",
+        "parentUid" : "fe235826726780beb63b4f1aafa91856",
         "status" : "broken",
         "time" : {
-          "start" : 1749632530251,
-          "stop" : 1749632543677,
-          "duration" : 13426
+          "start" : 1749634125186,
+          "stop" : 1749634145685,
+          "duration" : 20499
         },
         "flaky" : false,
         "newFailed" : false,
         "parameters" : [ ]
       } ],
-      "uid" : "19110049971c3006ec56c36252e410a3"
+      "uid" : "fe235826726780beb63b4f1aafa91856"
     } ],
     "uid" : "bdbf199525818fae7a8651db9eafe741"
   } ]

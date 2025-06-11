@@ -9,13 +9,13 @@
       "total" : 1
     },
     "items" : [ {
-      "uid" : "ff753b252eaf570a",
+      "uid" : "775f118fcbf08895",
       "status" : "broken",
-      "statusDetails" : "selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame\n  (Session info: chrome=137.0.7151.68); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception\nStacktrace:\n#0 0x55c3541cdd9e <unknown>\n#1 0x55c353c6cfab <unknown>\n#2 0x55c353c74439 <unknown>\n#3 0x55c353c762bb <unknown>\n#4 0x55c353c76381 <unknown>\n#5 0x55c353cb2066 <unknown>\n#6 0x55c353ce14d2 <unknown>\n#7 0x55c353cacdae <unknown>\n#8 0x55c353ce16de <unknown>\n#9 0x55c353d02915 <unknown>\n#10 0x55c353ce1283 <unknown>\n#11 0x55c353cab0c9 <unknown>\n#12 0x55c353cabe78 <unknown>\n#13 0x55c354199f5a <unknown>\n#14 0x55c35419d3ae <unknown>\n#15 0x55c35419ce58 <unknown>\n#16 0x55c35419d845 <unknown>\n#17 0x55c35418338b <unknown>\n#18 0x55c35419dbb0 <unknown>\n#19 0x55c35416c339 <unknown>\n#20 0x55c3541bc8b5 <unknown>\n#21 0x55c3541bca9b <unknown>\n#22 0x55c3541ccf15 <unknown>\n#23 0x7ff198f481f5 <unknown>",
+      "statusDetails" : "selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame\n  (Session info: chrome=137.0.7151.68); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception\nStacktrace:\n#0 0x55a960bfdd9e <unknown>\n#1 0x55a96069cfab <unknown>\n#2 0x55a9606a4439 <unknown>\n#3 0x55a9606a62bb <unknown>\n#4 0x55a9606a6381 <unknown>\n#5 0x55a9606e2066 <unknown>\n#6 0x55a9607114d2 <unknown>\n#7 0x55a9606dcdae <unknown>\n#8 0x55a9607116de <unknown>\n#9 0x55a960732915 <unknown>\n#10 0x55a960711283 <unknown>\n#11 0x55a9606db0c9 <unknown>\n#12 0x55a9606dbe78 <unknown>\n#13 0x55a960bc9f5a <unknown>\n#14 0x55a960bcd3ae <unknown>\n#15 0x55a960bcce58 <unknown>\n#16 0x55a960bcd845 <unknown>\n#17 0x55a960bb338b <unknown>\n#18 0x55a960bcdbb0 <unknown>\n#19 0x55a960b9c339 <unknown>\n#20 0x55a960bec8b5 <unknown>\n#21 0x55a960beca9b <unknown>\n#22 0x55a960bfcf15 <unknown>\n#23 0x7f90d0a001f5 <unknown>",
       "time" : {
-        "start" : 1749632530251,
-        "stop" : 1749632543677,
-        "duration" : 13426
+        "start" : 1749634125186,
+        "stop" : 1749634145685,
+        "duration" : 20499
       }
     } ]
   },
@@ -29,12 +29,12 @@
       "total" : 1
     },
     "items" : [ {
-      "uid" : "9d8abb859576a932",
+      "uid" : "b3ed28d281227bdd",
       "status" : "passed",
       "time" : {
-        "start" : 1749632566155,
-        "stop" : 1749632601279,
-        "duration" : 35124
+        "start" : 1749634163217,
+        "stop" : 1749634198250,
+        "duration" : 35033
       }
     } ]
   },
@@ -48,12 +48,12 @@
       "total" : 1
     },
     "items" : [ {
-      "uid" : "5cc108fde47d799",
+      "uid" : "d8a5e6bacc80a568",
       "status" : "passed",
       "time" : {
-        "start" : 1749632534943,
-        "stop" : 1749632549713,
-        "duration" : 14770
+        "start" : 1749634129305,
+        "stop" : 1749634143520,
+        "duration" : 14215
       }
     } ]
   },
@@ -67,12 +67,12 @@
       "total" : 1
     },
     "items" : [ {
-      "uid" : "83db832224322a57",
+      "uid" : "1c49c98717128e95",
       "status" : "passed",
       "time" : {
-        "start" : 1749632552417,
-        "stop" : 1749632569452,
-        "duration" : 17035
+        "start" : 1749634145908,
+        "stop" : 1749634160839,
+        "duration" : 14931
       }
     } ]
   },
@@ -86,12 +86,12 @@
       "total" : 1
     },
     "items" : [ {
-      "uid" : "4c465caab4f4775",
+      "uid" : "c5686464cf3baf7",
       "status" : "passed",
       "time" : {
-        "start" : 1749632546067,
-        "stop" : 1749632563833,
-        "duration" : 17766
+        "start" : 1749634147808,
+        "stop" : 1749634171248,
+        "duration" : 23440
       }
     } ]
   },
@@ -105,12 +105,12 @@
       "total" : 1
     },
     "items" : [ {
-      "uid" : "19f06c13c4e8d3d6",
+      "uid" : "caa9c35379354b03",
       "status" : "passed",
       "time" : {
-        "start" : 1749632530177,
-        "stop" : 1749632532359,
-        "duration" : 2182
+        "start" : 1749634125187,
+        "stop" : 1749634127339,
+        "duration" : 2152
       }
     } ]
   }
