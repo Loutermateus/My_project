@@ -40,7 +40,7 @@ jobs:
       - name: Run tests via docker-compose
 
         run: |
-          docker compose up tests
+          docker compose up ui-tests
 
       # Шаг 4 - Копирование истории
       - name: Copy Allure history
