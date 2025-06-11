@@ -58,7 +58,7 @@ jobs:
           MANAGER_LOGIN: ${{ secrets.MANAGER_LOGIN }}
           MANAGER_PASSWORD: ${{ secrets.MANAGER_PASSWORD }}
         run: |
-          docker compose run --rm \
+          docker compose up tests \
             -e LOGIN="$LOGIN" \
             -e PASSWORD="$PASSWORD" \
             -e MANAGER_LOGIN="$MANAGER_LOGIN" \
