@@ -29,8 +29,4 @@ services:
     volumes:
       - ./:/usr/workspace
     working_dir: /usr/workspace
-    command: >
-      /bin/sh -c "\
-        ls -la && \
-        ls -la allure-results || echo 'No allure-results directory found!' && \
-        allure generate allure-results --clean -o allure-report"
+    command: /bin/sh -c "ls -la && allure generate allure-results --clean -o allure-report"
