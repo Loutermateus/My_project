@@ -81,10 +81,11 @@ jobs:
       - name: Generate Allure report
         run: docker compose up report
 
-      - name: Deploy Allure report to GitHub Pages
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: ${{ secrets.CI_TOKEN }}
           branch: gh-pages
           folder: allure-report
           clean: true
+          force: true
+          token: ${{ secrets.UI_TOKEN }}
