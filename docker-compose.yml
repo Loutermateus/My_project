@@ -1,5 +1,8 @@
 version: "3.8"
 
+volumes:
+  allure-data:
+
 services:
   ui-tests:
     image: tp:v1
@@ -9,6 +12,7 @@ services:
     shm_size: 2gb
     volumes:
       - ./:/usr/workspace
+      - allure-data:/usr/workspace/allure-results
       - /dev/shm:/dev/shm
     working_dir: /usr/workspace
     command: >
@@ -28,5 +32,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./:/usr/workspace
+      - allure-data:/usr/workspace/allure-results
     working_dir: /usr/workspace
-    command: /bin/sh -c "ls -la && allure generate allure-results --clean -o allure-report"
+    command: >
+      /bin/sh -c "ls -la allure-results && allure generate allure-results --clean -o allure-report"
