@@ -49,9 +49,9 @@ jobs:
       # Шаг 4 - Копирование истории
       - name: Copy Allure history
         run: |
-          mkdir -p allure-results/history
+          mkdir -p report/history
           if [ -d "./.github/gh-pages/history" ]; then
-            cp -R ./.github/gh-pages/history/* allure-results/history/
+            cp -R ./.github/gh-pages/history/* report/history/
           fi
 
       # Шаг 5 - Генерация отчета
