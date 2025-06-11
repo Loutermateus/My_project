@@ -9,6 +9,7 @@ services:
       dockerfile: Dockerfile
     shm_size: 2gb
     volumes:
+      - ./report:/usr/src/app/report
       - ./:/usr/workspace
       - /dev/shm:/dev/shm  # Расширяет память для Chrome в Docker
     working_dir: /usr/workspace
