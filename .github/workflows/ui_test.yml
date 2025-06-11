@@ -69,12 +69,8 @@ jobs:
             cp -R ./.gh-pages/history/* report/history/
           fi
 
-      - name: Debug – show report files before deploy
-        run: |
-          echo "📁 Содержимое report перед деплоем:"
-          ls -la report
-          echo "🔍 Список файлов report:"
-          find report -type f | head -n 10
+      - name: Generate Allure report
+        run: docker compose up report
 
       - name: Deploy Allure report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
