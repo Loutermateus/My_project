@@ -4,19 +4,6 @@ run-name:  Test ${{ github.event.inputs.STAGE }} | ${{ github.event.inputs.MARKE
 on:
   workflow_dispatch:
     inputs:
-      ENV:
-        description: "Choose environment"
-        required: true
-        type: environment # ? Важно: это тип environment!
-
-
-
-      MARKER:
-        description: "Choose microservice to test"
-        required: true
-        default: "all"
-
-
 
       THREADS:
         description: "Threads count"
@@ -30,7 +17,6 @@ on:
 jobs:
   ui-tests:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.ENV }}  # ✅ Привязка джоба к выбранному environment
 
     steps:
       # Клонируем репозиторий
