@@ -10,10 +10,10 @@ def driver(request):
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--headless=new")   # Убери, если нужно окно браузера
+    # options.add_argument("--headless=new")   # Убери, если нужно окно браузера
 
-    service = Service(CHROMEDRIVER_PATH)
-    driver = webdriver.Chrome(options=options, service=service)
+    # service = Service(CHROMEDRIVER_PATH)
+    driver = webdriver.Chrome(options=options)
 
     driver.get("https://qa-windows-1.takeprofittech.com:8000")
     request.cls.driver = driver
