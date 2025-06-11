@@ -13,7 +13,7 @@ services:
     working_dir: /usr/src/app
     command: >
       /bin/sh -c "\
-        pytest -sv -o log_cli=true --alluredir=report -n=2 || true"
+        pytest -sv -o log_cli=true --alluredir=allure-results -n=2 || true"
     tty: true
     environment:
       LOGIN: ${LOGIN}
@@ -28,6 +28,9 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./:/usr/workspace
-
-    command: /bin/sh -c "ls -la && allure generate report --clean -o allure-report"
     working_dir: /usr/workspace
+    command: >
+      /bin/sh -c "\
+        ls -la && \
+        ls -la allure-results || echo 'No allure-results directory found!' && \
+        allure generate allure-results --clean -o allure-report"

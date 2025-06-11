@@ -1,10 +1,9 @@
-name:  UI Tests
-run-name:  Test ${{ github.event.inputs.STAGE }} | ${{ github.event.inputs.MARKER }} marker | ${{ github.event.inputs.THREADS }} threads
+name: UI Tests
+run-name: Test ${{ github.event.inputs.STAGE }} | ${{ github.event.inputs.MARKER }} marker | ${{ github.event.inputs.THREADS }} threads
 
 on:
   workflow_dispatch:
     inputs:
-
       THREADS:
         description: "Threads count"
         required: false
@@ -36,25 +35,26 @@ jobs:
           echo "Browser=${{ inputs.BROWSER }}" >> allure-results/environment.properties
           echo "Stage=${{ secrets.STAGE }}" >> allure-results/environment.properties
 
-      # Запуск тестов
+      # Запуск тестов с прокидыванием env
       - name: Run tests via docker-compose
         env:
           LOGIN: ${{ secrets.LOGIN }}
           PASSWORD: ${{ secrets.PASSWORD }}
           MANAGER_LOGIN: ${{ secrets.MANAGER_LOGIN }}
           MANAGER_PASSWORD: ${{ secrets.MANAGER_PASSWORD }}
+          THREADS: ${{ inputs.THREADS }}
         run: |
-          docker compose run -e LOGIN -e PASSWORD -e MANAGER_LOGIN -e MANAGER_PASSWORD ui-tests
+          docker compose up ui-tests
 
-      # Шаг 4 - Копирование истории
+      # Копирование истории Allure из gh-pages
       - name: Copy Allure history
         run: |
-          mkdir -p report/history
+          mkdir -p allure-results/history
           if [ -d "./.github/gh-pages/history" ]; then
-            cp -R ./.github/gh-pages/history/* report/history/
+            cp -R ./.github/gh-pages/history/* allure-results/history/
           fi
 
-      # Шаг 5 - Генерация отчета
+      # Генерация Allure отчёта
       - name: Generate Allure-report
         env:
           BROWSER: ${{ inputs.BROWSER }}
@@ -64,7 +64,7 @@ jobs:
         run: |
           docker compose up report
 
-      # Шаг 6 - Деплой на gh-pages
+      # Деплой отчёта на gh-pages
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
