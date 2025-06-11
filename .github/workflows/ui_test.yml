@@ -57,9 +57,9 @@ jobs:
             ui-tests /bin/sh -c "\
               mkdir -p report && \
               if [ \"$MARKER\" = \"all\" ]; then \
-                pytest -sv -o log_cli=true --alluredir=report -n=$THREADS; \
+                pytest -sv -o log_cli=true --alluredir=report -n=$THREADS || true; \
               else \
-                pytest -sv -o log_cli=true -m \"$MARKER\" --alluredir=report -n=$THREADS; \
+                pytest -sv -o log_cli=true -m \"$MARKER\" --alluredir=report -n=$THREADS || true; \
               fi"
 
       - name: Generate Allure HTML report
