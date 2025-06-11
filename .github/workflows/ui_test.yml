@@ -62,15 +62,6 @@ jobs:
                 pytest -sv -o log_cli=true -m \"$MARKER\" --alluredir=report -n=$THREADS || true; \
               fi"
 
-      - name: Generate Allure HTML report
-        run: |
-          docker compose run --rm ui-tests allure generate report -o report --clean
-
-      - name: Ensure index.html exists before deploy
-        run: |
-          ls -la report
-          test -f report/index.html && echo "✅ index.html найден" || (echo "❌ index.html отсутствует" && exit 1)
-
       - name: Copy Allure history
         run: |
           mkdir -p report/history
@@ -82,8 +73,8 @@ jobs:
         run: |
           echo "📁 Содержимое report перед деплоем:"
           ls -la report
-          echo "🔍 Первые строки index.html:"
-          head -n 10 report/index.html
+          echo "🔍 Список файлов report:"
+          find report -type f | head -n 10
 
       - name: Deploy Allure report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
