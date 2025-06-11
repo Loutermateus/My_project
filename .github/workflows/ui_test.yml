@@ -26,6 +26,7 @@ on:
 jobs:
   run-ui-tests:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.ENV }}
 
     steps:
       - name: Checkout repo
@@ -41,6 +42,14 @@ jobs:
         run: |
           echo "MARKER=${{ github.event.inputs.MARKER }}" >> $GITHUB_ENV
           echo "THREADS=${{ github.event.inputs.THREADS }}" >> $GITHUB_ENV
+          
+
+      - name: Prepare Allure environment
+        run: |
+          mkdir -p report
+          echo "Branch=${{ github.ref_name }}" > report/environment.properties
+          echo "Commit=${{ github.sha }}" >> report/environment.properties
+          echo "Environment=${{ github.event.inputs.ENV }}" >> report/environment.properties
 
       - name: Run UI tests and collect Allure raw results
         env:
@@ -77,5 +86,5 @@ jobs:
         with:
           token: ${{ secrets.CI_TOKEN }}
           branch: gh-pages
-          folder: report
+          folder: allure-report
           clean: true

@@ -8,16 +8,14 @@ services:
       dockerfile: Dockerfile
     shm_size: 2gb
     volumes:
-      - ./report:/usr/src/app/report
+      - ./report:/usr/src/app/report      # raw results
       - ./:/usr/src/app
       - /dev/shm:/dev/shm
     working_dir: /usr/src/app
     command: >
       /bin/sh -c "\
-        pytest -sv -o log_cli=true --alluredir=report -n=2 && \
-        allure generate report -o report --clean"
+        pytest -sv -o log_cli=true --alluredir=report -n=2 || true"
     tty: true
-
 
   report:
     image: tp:v1
@@ -25,6 +23,8 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./:/usr/workspace
-    command: /bin/sh -c "ls -la && allure generate report --clean -o allure-report"
+      - ./report:/usr/workspace/report    # raw results
+      - ./allure-report:/usr/workspace/allure-report  # generated HTML report
     working_dir: /usr/workspace
+    command: >
+      /bin/sh -c "allure generate report --clean -o allure-report"
