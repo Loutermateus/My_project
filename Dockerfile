@@ -25,10 +25,12 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Установка Allure CLI
-RUN wget https://github.com/allure-framework/allure2/releases/download/2.24.1/allure-2.24.1.tgz \
-    && tar -xzf allure-2.24.1.tgz -C /opt/ \
-    && ln -s /opt/allure-2.24.1/bin/allure /usr/bin/allure \
-    && rm allure-2.24.1.tgz
+RUN apk update && \
+    apk add openjdk11-jre curl tar && \
+    curl -o allure-2.13.8.tgz -Ls https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.13.8/allure-commandline-2.13.8.tgz && \
+    tar -zxvf allure-2.13.8.tgz -C /opt/ && \
+    ln -s /opt/allure-2.13.8/bin/allure /usr/bin/allure && \
+    rm allure-2.13.8.tgz
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
