@@ -8,8 +8,7 @@ services:
       dockerfile: Dockerfile
     shm_size: 2gb
     volumes:
-      - ./report:/usr/src/app/report      # raw results
-      - ./:/usr/src/app
+      - ./:/usr/workspace
       - /dev/shm:/dev/shm
     working_dir: /usr/src/app
     command: >
@@ -23,8 +22,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./report:/usr/workspace/report    # raw results
-      - ./allure-report:/usr/workspace/allure-report  # generated HTML report
+      - ./:/usr/workspace
+
+    command: /bin/sh -c "ls -la && allure generate allure-results --clean -o allure-report"
     working_dir: /usr/workspace
-    command: >
-      /bin/sh -c "allure generate report --clean -o allure-report"
