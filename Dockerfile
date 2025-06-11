@@ -1,6 +1,5 @@
 FROM python:3.11-slim
 
-# Установка зависимостей
 RUN apt-get update && apt-get install -y \
     wget \
     unzip \
@@ -18,14 +17,18 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем переменные окружения, чтобы Selenium знал путь
 ENV CHROME_BIN=/usr/bin/chromium
 ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
 
-# Копируем зависимости Python
+# Установка Python-зависимостей
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Копируем всё остальное
+# Установка Allure CLI
+RUN wget https://github.com/allure-framework/allure2/releases/download/2.24.1/allure-2.24.1.tgz \
+    && tar -xzf allure-2.24.1.tgz -C /opt/ \
+    && ln -s /opt/allure-2.24.1/bin/allure /usr/bin/allure \
+    && rm allure-2.24.1.tgz
+
 COPY . /usr/src/app
 WORKDIR /usr/src/app
