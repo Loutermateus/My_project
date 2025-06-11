@@ -15,6 +15,11 @@ services:
       /bin/sh -c "\
         pytest -sv -o log_cli=true --alluredir=report -n=2 || true"
     tty: true
+    environment:
+      LOGIN: ${LOGIN}
+      PASSWORD: ${PASSWORD}
+      MANAGER_LOGIN: ${MANAGER_LOGIN}
+      MANAGER_PASSWORD: ${MANAGER_PASSWORD}
 
   report:
     image: tp:v1
