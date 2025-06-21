@@ -1,0 +1,173 @@
+{
+  "uid" : "f1affa935efcace3",
+  "name" : "Test adjust",
+  "fullName" : "tests.test_exe.TestExe#test_open_and_adjust_position",
+  "historyId" : "36e9e6dea728ecd40c2e9e7f3372b7f1",
+  "time" : {
+    "start" : 1750469843497,
+    "stop" : 1750469856299,
+    "duration" : 12802
+  },
+  "status" : "broken",
+  "statusMessage" : "selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame\n  (Session info: chrome=137.0.7151.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception\nStacktrace:\n#0 0x560193b1d71e <unknown>\n#1 0x5601935d76f1 <unknown>\n#2 0x5601935de8a9 <unknown>\n#3 0x5601935e0d2c <unknown>\n#4 0x5601935e0e11 <unknown>\n#5 0x560193621d4f <unknown>\n#6 0x56019364c1d2 <unknown>\n#7 0x56019361b9dd <unknown>\n#8 0x56019364c39e <unknown>\n#9 0x56019366dbe6 <unknown>\n#10 0x56019364bfa3 <unknown>\n#11 0x560193619f1d <unknown>\n#12 0x56019361acf1 <unknown>\n#13 0x560193ae93ea <unknown>\n#14 0x560193aec73f <unknown>\n#15 0x560193aec1d8 <unknown>\n#16 0x560193aecbe5 <unknown>\n#17 0x560193ad30bb <unknown>\n#18 0x560193aecf50 <unknown>\n#19 0x560193abcaf9 <unknown>\n#20 0x560193b0b355 <unknown>\n#21 0x560193b0b54b <unknown>\n#22 0x560193b1c295 <unknown>\n#23 0x7f18285321f5 <unknown>",
+  "statusTrace" : "self = <test_exe.TestExe object at 0x7f4599a5d7d0>\n\n    @allure.title(\"Test adjust\")\n    def test_open_and_adjust_position(self):\n        self.login_page().open()\n        self.login_page().login()\n        self.menu().settings.open_setting_market()\n        self.markers_pages().open_create()\n        self.markers_pages().create.choose_enable()\n        self.markers_pages().create.fill_name(\"pogoda\")\n        self.markers_pages().create.fill_configuration(\"babu\")\n        self.markers_pages().create.fill_market_type(\"Fortex\")\n        self.markers_pages().create.choose_save_to_csv_file()\n        self.markers_pages().create.choose_save_to_log_file()\n        self.markers_pages().create.click_create()\n        self.markers_pages().refresh_page()\n        self.markers_pages().find_row_by_username(\"pogoda\")\n        self.markers_pages().open_action_position_by_name(\"pogoda\")\n        self.markers_pages().positions.open_adjust()\n>       self.markers_pages().positions.adjust.fill_symbol(\"EUR/USD$\")\n\ntests/test_exe.py:58: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npages/markers_page/components/positions/components/adjust.py:25: in fill_symbol\n    if market_type in element.text:\n../local/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:109: in text\n    return self._execute(Command.GET_ELEMENT_TEXT)[\"value\"]\n../local/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:572: in _execute\n    return self._parent.execute(command, params)\n../local/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:448: in execute\n    self.error_handler.check_response(response)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x7f4599b6c690>\nresponse = {'status': 404, 'value': '{\"value\":{\"error\":\"stale element reference\",\"message\":\"stale element reference: stale elemen...\\\\n#21 0x560193b0b54b \\\\u003Cunknown>\\\\n#22 0x560193b1c295 \\\\u003Cunknown>\\\\n#23 0x7f18285321f5 \\\\u003Cunknown>\\\\n\"}}'}\n\n    def check_response(self, response: Dict[str, Any]) -> None:\n        \"\"\"Checks that a JSON response from the WebDriver does not have an\n        error.\n    \n        :Args:\n         - response - The JSON response from the WebDriver server as a dictionary\n           object.\n    \n        :Raises: If the response contains an error message.\n        \"\"\"\n        status = response.get(\"status\", None)\n        if not status or status == ErrorCode.SUCCESS:\n            return\n        value = None\n        message = response.get(\"message\", \"\")\n        screen: str = response.get(\"screen\", \"\")\n        stacktrace = None\n        if isinstance(status, int):\n            value_json = response.get(\"value\", None)\n            if value_json and isinstance(value_json, str):\n                import json\n    \n                try:\n                    value = json.loads(value_json)\n                    if len(value) == 1:\n                        value = value[\"value\"]\n                    status = value.get(\"error\", None)\n                    if not status:\n                        status = value.get(\"status\", ErrorCode.UNKNOWN_ERROR)\n                        message = value.get(\"value\") or value.get(\"message\")\n                        if not isinstance(message, str):\n                            value = message\n                            message = message.get(\"message\")\n                    else:\n                        message = value.get(\"message\", None)\n                except ValueError:\n                    pass\n    \n        exception_class: Type[WebDriverException]\n        e = ErrorCode()\n        error_codes = [item for item in dir(e) if not item.startswith(\"__\")]\n        for error_code in error_codes:\n            error_info = getattr(ErrorCode, error_code)\n            if isinstance(error_info, list) and status in error_info:\n                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)\n                break\n        else:\n            exception_class = WebDriverException\n    \n        if not value:\n            value = response[\"value\"]\n        if isinstance(value, str):\n            raise exception_class(value)\n        if message == \"\" and \"message\" in value:\n            message = value[\"message\"]\n    \n        screen = None  # type: ignore[assignment]\n        if \"screen\" in value:\n            screen = value[\"screen\"]\n    \n        stacktrace = None\n        st_value = value.get(\"stackTrace\") or value.get(\"stacktrace\")\n        if st_value:\n            if isinstance(st_value, str):\n                stacktrace = st_value.split(\"\\n\")\n            else:\n                stacktrace = []\n                try:\n                    for frame in st_value:\n                        line = frame.get(\"lineNumber\", \"\")\n                        file = frame.get(\"fileName\", \"<anonymous>\")\n                        if line:\n                            file = f\"{file}:{line}\"\n                        meth = frame.get(\"methodName\", \"<anonymous>\")\n                        if \"className\" in frame:\n                            meth = f\"{frame['className']}.{meth}\"\n                        msg = \"    at %s (%s)\"\n                        msg = msg % (meth, file)\n                        stacktrace.append(msg)\n                except TypeError:\n                    pass\n        if exception_class == UnexpectedAlertPresentException:\n            alert_text = None\n            if \"data\" in value:\n                alert_text = value[\"data\"].get(\"text\")\n            elif \"alert\" in value:\n                alert_text = value[\"alert\"].get(\"text\")\n            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here\n>       raise exception_class(message, screen, stacktrace)\nE       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame\nE         (Session info: chrome=137.0.7151.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception\nE       Stacktrace:\nE       #0 0x560193b1d71e <unknown>\nE       #1 0x5601935d76f1 <unknown>\nE       #2 0x5601935de8a9 <unknown>\nE       #3 0x5601935e0d2c <unknown>\nE       #4 0x5601935e0e11 <unknown>\nE       #5 0x560193621d4f <unknown>\nE       #6 0x56019364c1d2 <unknown>\nE       #7 0x56019361b9dd <unknown>\nE       #8 0x56019364c39e <unknown>\nE       #9 0x56019366dbe6 <unknown>\nE       #10 0x56019364bfa3 <unknown>\nE       #11 0x560193619f1d <unknown>\nE       #12 0x56019361acf1 <unknown>\nE       #13 0x560193ae93ea <unknown>\nE       #14 0x560193aec73f <unknown>\nE       #15 0x560193aec1d8 <unknown>\nE       #16 0x560193aecbe5 <unknown>\nE       #17 0x560193ad30bb <unknown>\nE       #18 0x560193aecf50 <unknown>\nE       #19 0x560193abcaf9 <unknown>\nE       #20 0x560193b0b355 <unknown>\nE       #21 0x560193b0b54b <unknown>\nE       #22 0x560193b1c295 <unknown>\nE       #23 0x7f18285321f5 <unknown>\n\n../local/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: StaleElementReferenceException",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "driver",
+    "time" : {
+      "start" : 1750469841575,
+      "stop" : 1750469843495,
+      "duration" : 1920
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "_session_faker",
+    "time" : {
+      "start" : 1750469841491,
+      "stop" : 1750469841575,
+      "duration" : 84
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "_xunit_setup_method_fixture_TestExe",
+    "time" : {
+      "start" : 1750469843495,
+      "stop" : 1750469843496,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "broken",
+    "statusMessage" : "selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame\n  (Session info: chrome=137.0.7151.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception\nStacktrace:\n#0 0x560193b1d71e <unknown>\n#1 0x5601935d76f1 <unknown>\n#2 0x5601935de8a9 <unknown>\n#3 0x5601935e0d2c <unknown>\n#4 0x5601935e0e11 <unknown>\n#5 0x560193621d4f <unknown>\n#6 0x56019364c1d2 <unknown>\n#7 0x56019361b9dd <unknown>\n#8 0x56019364c39e <unknown>\n#9 0x56019366dbe6 <unknown>\n#10 0x56019364bfa3 <unknown>\n#11 0x560193619f1d <unknown>\n#12 0x56019361acf1 <unknown>\n#13 0x560193ae93ea <unknown>\n#14 0x560193aec73f <unknown>\n#15 0x560193aec1d8 <unknown>\n#16 0x560193aecbe5 <unknown>\n#17 0x560193ad30bb <unknown>\n#18 0x560193aecf50 <unknown>\n#19 0x560193abcaf9 <unknown>\n#20 0x560193b0b355 <unknown>\n#21 0x560193b0b54b <unknown>\n#22 0x560193b1c295 <unknown>\n#23 0x7f18285321f5 <unknown>",
+    "statusTrace" : "self = <test_exe.TestExe object at 0x7f4599a5d7d0>\n\n    @allure.title(\"Test adjust\")\n    def test_open_and_adjust_position(self):\n        self.login_page().open()\n        self.login_page().login()\n        self.menu().settings.open_setting_market()\n        self.markers_pages().open_create()\n        self.markers_pages().create.choose_enable()\n        self.markers_pages().create.fill_name(\"pogoda\")\n        self.markers_pages().create.fill_configuration(\"babu\")\n        self.markers_pages().create.fill_market_type(\"Fortex\")\n        self.markers_pages().create.choose_save_to_csv_file()\n        self.markers_pages().create.choose_save_to_log_file()\n        self.markers_pages().create.click_create()\n        self.markers_pages().refresh_page()\n        self.markers_pages().find_row_by_username(\"pogoda\")\n        self.markers_pages().open_action_position_by_name(\"pogoda\")\n        self.markers_pages().positions.open_adjust()\n>       self.markers_pages().positions.adjust.fill_symbol(\"EUR/USD$\")\n\ntests/test_exe.py:58: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npages/markers_page/components/positions/components/adjust.py:25: in fill_symbol\n    if market_type in element.text:\n../local/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:109: in text\n    return self._execute(Command.GET_ELEMENT_TEXT)[\"value\"]\n../local/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:572: in _execute\n    return self._parent.execute(command, params)\n../local/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:448: in execute\n    self.error_handler.check_response(response)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x7f4599b6c690>\nresponse = {'status': 404, 'value': '{\"value\":{\"error\":\"stale element reference\",\"message\":\"stale element reference: stale elemen...\\\\n#21 0x560193b0b54b \\\\u003Cunknown>\\\\n#22 0x560193b1c295 \\\\u003Cunknown>\\\\n#23 0x7f18285321f5 \\\\u003Cunknown>\\\\n\"}}'}\n\n    def check_response(self, response: Dict[str, Any]) -> None:\n        \"\"\"Checks that a JSON response from the WebDriver does not have an\n        error.\n    \n        :Args:\n         - response - The JSON response from the WebDriver server as a dictionary\n           object.\n    \n        :Raises: If the response contains an error message.\n        \"\"\"\n        status = response.get(\"status\", None)\n        if not status or status == ErrorCode.SUCCESS:\n            return\n        value = None\n        message = response.get(\"message\", \"\")\n        screen: str = response.get(\"screen\", \"\")\n        stacktrace = None\n        if isinstance(status, int):\n            value_json = response.get(\"value\", None)\n            if value_json and isinstance(value_json, str):\n                import json\n    \n                try:\n                    value = json.loads(value_json)\n                    if len(value) == 1:\n                        value = value[\"value\"]\n                    status = value.get(\"error\", None)\n                    if not status:\n                        status = value.get(\"status\", ErrorCode.UNKNOWN_ERROR)\n                        message = value.get(\"value\") or value.get(\"message\")\n                        if not isinstance(message, str):\n                            value = message\n                            message = message.get(\"message\")\n                    else:\n                        message = value.get(\"message\", None)\n                except ValueError:\n                    pass\n    \n        exception_class: Type[WebDriverException]\n        e = ErrorCode()\n        error_codes = [item for item in dir(e) if not item.startswith(\"__\")]\n        for error_code in error_codes:\n            error_info = getattr(ErrorCode, error_code)\n            if isinstance(error_info, list) and status in error_info:\n                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)\n                break\n        else:\n            exception_class = WebDriverException\n    \n        if not value:\n            value = response[\"value\"]\n        if isinstance(value, str):\n            raise exception_class(value)\n        if message == \"\" and \"message\" in value:\n            message = value[\"message\"]\n    \n        screen = None  # type: ignore[assignment]\n        if \"screen\" in value:\n            screen = value[\"screen\"]\n    \n        stacktrace = None\n        st_value = value.get(\"stackTrace\") or value.get(\"stacktrace\")\n        if st_value:\n            if isinstance(st_value, str):\n                stacktrace = st_value.split(\"\\n\")\n            else:\n                stacktrace = []\n                try:\n                    for frame in st_value:\n                        line = frame.get(\"lineNumber\", \"\")\n                        file = frame.get(\"fileName\", \"<anonymous>\")\n                        if line:\n                            file = f\"{file}:{line}\"\n                        meth = frame.get(\"methodName\", \"<anonymous>\")\n                        if \"className\" in frame:\n                            meth = f\"{frame['className']}.{meth}\"\n                        msg = \"    at %s (%s)\"\n                        msg = msg % (meth, file)\n                        stacktrace.append(msg)\n                except TypeError:\n                    pass\n        if exception_class == UnexpectedAlertPresentException:\n            alert_text = None\n            if \"data\" in value:\n                alert_text = value[\"data\"].get(\"text\")\n            elif \"alert\" in value:\n                alert_text = value[\"alert\"].get(\"text\")\n            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here\n>       raise exception_class(message, screen, stacktrace)\nE       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame\nE         (Session info: chrome=137.0.7151.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception\nE       Stacktrace:\nE       #0 0x560193b1d71e <unknown>\nE       #1 0x5601935d76f1 <unknown>\nE       #2 0x5601935de8a9 <unknown>\nE       #3 0x5601935e0d2c <unknown>\nE       #4 0x5601935e0e11 <unknown>\nE       #5 0x560193621d4f <unknown>\nE       #6 0x56019364c1d2 <unknown>\nE       #7 0x56019361b9dd <unknown>\nE       #8 0x56019364c39e <unknown>\nE       #9 0x56019366dbe6 <unknown>\nE       #10 0x56019364bfa3 <unknown>\nE       #11 0x560193619f1d <unknown>\nE       #12 0x56019361acf1 <unknown>\nE       #13 0x560193ae93ea <unknown>\nE       #14 0x560193aec73f <unknown>\nE       #15 0x560193aec1d8 <unknown>\nE       #16 0x560193aecbe5 <unknown>\nE       #17 0x560193ad30bb <unknown>\nE       #18 0x560193aecf50 <unknown>\nE       #19 0x560193abcaf9 <unknown>\nE       #20 0x560193b0b355 <unknown>\nE       #21 0x560193b0b54b <unknown>\nE       #22 0x560193b1c295 <unknown>\nE       #23 0x7f18285321f5 <unknown>\n\n../local/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: StaleElementReferenceException",
+    "steps" : [ {
+      "name" : "Step",
+      "time" : {
+        "start" : 1750469851837,
+        "stop" : 1750469852571,
+        "duration" : 734
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "name",
+        "value" : "'pogoda'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ {
+      "uid" : "2cc83c7d7e97a0f5",
+      "name" : "1750469841.4709961",
+      "source" : "2cc83c7d7e97a0f5.png",
+      "type" : "image/png",
+      "size" : 60197
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "driver::0",
+    "time" : {
+      "start" : 1750469856382,
+      "stop" : 1750469856455,
+      "duration" : 73
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "_xunit_setup_method_fixture_TestExe::0",
+    "time" : {
+      "start" : 1750469856381,
+      "stop" : 1750469856381,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "tests"
+  }, {
+    "name" : "suite",
+    "value" : "test_exe"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestExe"
+  }, {
+    "name" : "host",
+    "value" : "881a8d05dad7"
+  }, {
+    "name" : "thread",
+    "value" : "12-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "tests.test_exe"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Test defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "f1affa935efcace3.json",
+  "parameterValues" : [ ]
+}
